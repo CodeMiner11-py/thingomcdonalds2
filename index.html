@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000;
+            background-color: #000; /* Set background to black */
         }
 
         /* Overlay CSS */
@@ -29,8 +29,6 @@
             background: #000 url('https://kidslearninglab.com/wp-content/uploads/2025/02/podcast-logo-app-rounded.png') no-repeat center 40%;
             background-size: 100px 100px;
             z-index: 9999;
-            animation: fadeOutOverlay 5s ease-in-out forwards;
-            animation-delay: 0s; /* No delay for the overlay */
             pointer-events: none;
         }
 
@@ -45,25 +43,19 @@
             background-color: #fff;
             border-radius: 3px;
             z-index: 9999;
-            animation: loadingSlide 5s infinite, fadeOutOverlay 5s ease-in-out forwards;
-            animation-delay: 0s, 5s; /* The fadeOut animation starts after 5 seconds */
+            animation: loadingSlide 5s linear 3; /* Loop the loading bar 3 times */
             pointer-events: none;
         }
 
         /* Bar slide animation */
         @keyframes loadingSlide {
             0% { left: -100%; }
+            25% { left: 25%; }
             50% { left: 50%; }
+            75% { left: 75%; }
             100% { left: 100%; }
         }
 
-        /* Fade out both bar and overlay */
-        @keyframes fadeOutOverlay {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
     </style>
 </head>
 <body>
@@ -72,7 +64,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const targetUrl = urlParams.get('url') || 'https://news.kidslearninglab.com';  // Default to the specified URL if no parameter is given
         
-        // Wait for 5 seconds before redirecting
+        // Wait for 5 seconds before redirecting (after loading bar is done looping 3 times)
         setTimeout(function() {
             window.location.href = targetUrl;
         }, 5000); // 5000 milliseconds = 5 seconds
